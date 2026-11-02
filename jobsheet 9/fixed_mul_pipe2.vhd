@@ -1,4 +1,3 @@
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -13,8 +12,11 @@ entity fixed_mul_pipe2 is
 end fixed_mul_pipe2;
 
 architecture Behavioral of fixed_mul_pipe2 is
-    signal product_reg : unsigned(31 downto 0);
-    signal result_reg  : STD_LOGIC_VECTOR(15 downto 0);
+    signal product_reg : unsigned(31 downto 0)
+        := (others => '0');
+
+    signal result_reg : STD_LOGIC_VECTOR(15 downto 0)
+        := (others => '0');
 begin
     process(clk)
     begin
@@ -22,9 +24,9 @@ begin
             -- Tahap 1: perkalian
             product_reg <= unsigned(a) * unsigned(b);
 
-            -- Tahap 2: scaling hasil ke Q8.8
+            -- Tahap 2: scaling dan penyimpanan hasil
             result_reg <=
-                STD_LOGIC_VECTOR(product_reg(23 downto 8));
+                std_logic_vector(product_reg(23 downto 8));
         end if;
     end process;
 

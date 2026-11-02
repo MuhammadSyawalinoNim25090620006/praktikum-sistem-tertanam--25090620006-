@@ -1,4 +1,3 @@
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -6,53 +5,42 @@ entity tb_fixed_mul_q8_8 is
 end tb_fixed_mul_q8_8;
 
 architecture sim of tb_fixed_mul_q8_8 is
-    signal a      : STD_LOGIC_VECTOR(15 downto 0)
-                    := (others => '0');
-    signal b      : STD_LOGIC_VECTOR(15 downto 0)
-                    := (others => '0');
-    signal result : STD_LOGIC_VECTOR(15 downto 0);
+    signal a, b, result : STD_LOGIC_VECTOR(15 downto 0);
 begin
-
     uut: entity work.fixed_mul_q8_8
         port map (
-            a      => a,
-            b      => b,
+            a => a,
+            b => b,
             result => result
         );
 
-    stimulus: process
+    process
     begin
-        -- Pengujian 1: 2,0 x 3,0 = 6,0
+        -- 2.0 x 3.0 = 6.0
         a <= x"0200";
         b <= x"0300";
         wait for 10 ns;
-
         assert result = x"0600"
-            report "ERROR: Pengujian 1 gagal"
+            report "Gagal: 2.0 x 3.0"
             severity error;
 
-        -- Pengujian 2: 1,5 x 2,0 = 3,0
+        -- 1.5 x 2.0 = 3.0
         a <= x"0180";
         b <= x"0200";
         wait for 10 ns;
-
         assert result = x"0300"
-            report "ERROR: Pengujian 2 gagal"
+            report "Gagal: 1.5 x 2.0"
             severity error;
 
-        -- Pengujian 3: 0,5 x 0,5 = 0,25
+        -- 0.5 x 0.5 = 0.25
         a <= x"0080";
         b <= x"0080";
         wait for 10 ns;
-
         assert result = x"0040"
-            report "ERROR: Pengujian 3 gagal"
+            report "Gagal: 0.5 x 0.5"
             severity error;
 
-        report "Semua pengujian fixed-point berhasil"
-            severity note;
-
+        report "Semua pengujian lulus." severity note;
         wait;
     end process;
-
 end sim;
